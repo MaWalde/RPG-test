@@ -79,18 +79,6 @@ namespace Övningar_2
             int dam = Die.D6() + Die.D6() + Die.D6() - Die.D6() - 2;
             Hero.Skada(dam);
         }
-        /*static int SumD6(int ant)
-        {
-            rolls.Clear();
-            int sum = 0;
-            for (int i = 0; i < ant; i++)
-            {
-                int roll = Die.D6();
-                rolls.Add(roll);
-                sum += roll;
-            }
-            return sum;
-        }*/
     }
     class Monster
     {
