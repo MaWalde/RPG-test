@@ -6,8 +6,8 @@ namespace Övningar_2
     internal class Program
     {
         public static List<int> rolls = new List<int>();
-            static Monster Leeeek = new Monster();
-            static Player Hero = new Player();
+        static Monster Leeeek = new Monster();
+        static Player Hero = new Player();
         static void Main(string[] args)
         {
             /*Console.WriteLine("Hit enter to roll a d6!");
@@ -55,6 +55,19 @@ namespace Övningar_2
             Attack();
             Console.ReadKey();
             Defend();
+            Console.ReadKey();
+            Attack();
+            Console.ReadKey();
+            Defend();
+            Console.ReadKey();
+            Attack();
+            Console.ReadKey();
+            Defend();
+            Console.ReadKey();
+            Attack();
+            Console.ReadKey();
+            Defend();
+            Console.ReadKey();
         }
         static void Attack()
         {
@@ -82,15 +95,34 @@ namespace Övningar_2
     class Monster
     {
         private int hp = 30;
+        private bool time1 = false;
+        private bool time2 = false;
         public Monster()
         {
             hp = 30;
         }
         public int Skada(int skada)
         {
-            bool time1 = false; bool time2 = false;
             Console.WriteLine($"                Du svingar ditt svärd och gör {skada} skada");
             hp -= skada;
+            if (!time2)
+            {
+                if (hp <= 20)
+                {
+                    Console.WriteLine($"                Besten vrålar i smärta när du gör skada till den, den rör " +
+                        $"sig allt mer desperat i korridorens trånga utrymme.");
+                    time2 = true;
+                }
+            } //Engångs flavour när besten går under 20 hp
+            if (!time1)
+            {
+                if (hp <= 10)
+                {
+                    Console.WriteLine($"                Du skadar besten för ytterliggare och du ser hur den rör sig trögare och" +
+                        $" dens svarta blod rinner ymningt från de ställen du tidigare attackerat");
+                    time1 = true;
+                }
+            } //Engångs flavour när besten går under 10 hp
             if (hp <= 0)
             {
                 Console.WriteLine("\n                Besten tar ett sista rosslande andetag när du sänker din klinga i dess hals\n" +
@@ -106,24 +138,6 @@ namespace Övningar_2
                 Console.ReadKey();
                 Environment.Exit(0);
             } //Klar, dödsrycket.
-            if (time1 == false)
-            {
-                if (hp <= 10)
-                {
-                    Console.WriteLine($"                Du skadar besten för ytterliggare {skada} hp och du ser hur den rör sig trögare och" +
-                        $" dens svarta blod rinner ymningt från de ställen du tidigare attackerat");
-                    time1 = true;
-                }
-            } //Engångs flavour när besten går under 10 hp
-            if (time2 == false)
-            {
-                if (hp <= 20)
-                {
-                    Console.WriteLine($"                Besten vrålar i smärta när du gör {skada} skada till den, den rör " +
-                        $"sig allt mer desperat i korridorens trånga utrymme.");
-                    time2 = true;
-                }
-            } //Engångs flavour när besten går under 20 hp
             return skada;
         }
         public int HP()
@@ -134,21 +148,15 @@ namespace Övningar_2
     class Player
     {
         private int hp = 20;
+        private bool time1 = false;
         public Player()
         {
             hp = 20;
         }
         public void Skada(int skada)
         {
-            bool time1 = false;
             Console.WriteLine($"                Besten sveper med sina klor och gör {skada} skada.");
             hp -= skada;
-            if (hp <= 0)
-            {
-                Console.WriteLine("\n                Du dog och det sista du ser är hur besten sänker sina fruktansvärda klor i ditt \n" +
-                    "                ben och släpar dig tillbaka in i mörkret. Bättre lycka nästa gång!\n\n GAME OVER");
-                Environment.Exit(0);
-            } //Klar, dödsrycket
             if (!time1)
             {
                 if (hp <= 10)
@@ -158,6 +166,12 @@ namespace Övningar_2
                     time1 = true;
                 }
             }
+            if (hp <= 0)
+            {
+                Console.WriteLine("\n                Du dog och det sista du ser är hur besten sänker sina fruktansvärda klor i ditt \n" +
+                    "                ben och släpar dig tillbaka in i mörkret. Bättre lycka nästa gång!\n\n                                 GAME OVER");
+                Environment.Exit(0);
+            } //Klar, dödsrycket
         }
     }
     class Die
