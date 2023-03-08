@@ -6,6 +6,8 @@ namespace Övningar_2
     internal class Program
     {
         public static List<int> rolls = new List<int>();
+            static Monster Leeeek = new Monster();
+            static Player Hero = new Player();
         static void Main(string[] args)
         {
             /*Console.WriteLine("Hit enter to roll a d6!");
@@ -14,7 +16,6 @@ namespace Övningar_2
             /*Console.WriteLine("Ange antal d6 du vill rulla och ha totalen från: ");
             int ant = int.Parse(Console.ReadLine());
             Console.WriteLine($"Totalen av {ant} rullade d6 blev {SumD6(ant)}");*/
-            
             Console.WriteLine($"                                       Välkommen till äventyret!\n" +
                 $"                Du har i en närliggande by hört rykten om en förbannad plats i skogen med en helt\n" +
                 $"                otrolig skatt, ingen boende i byn vågar sig in i nämnda skog och du har på egen \n" +
@@ -43,28 +44,27 @@ namespace Övningar_2
                 $"                kortsvärd och gör ett utfall.");
             Thread.Sleep(1000);
             Console.ReadKey();
-            Attack(); 
-            Console.ReadKey(); 
-            Defend(); 
-            Console.ReadKey(); 
-            Attack(); 
-            Console.ReadKey(); 
-            Defend(); 
-            Console.ReadKey(); 
-            Attack(); 
-            Console.ReadKey(); 
+            Attack();
+            Console.ReadKey();
+            Defend();
+            Console.ReadKey();
+            Attack();
+            Console.ReadKey();
+            Defend();
+            Console.ReadKey();
+            Attack();
+            Console.ReadKey();
             Defend();
         }
-        static int Attack() 
+        static void Attack()
         {
-            int dam = Die.D4() + Die.D4() - 2;
-            Monster.Skada(dam);
-            return dam;
+            int dam = Die.D6() + Die.D6() - 2;
+            Leeeek.Skada(dam);
         }
         static void Defend()
         {
             int dam = Die.D6() + Die.D6() + Die.D6() - Die.D6() - 2;
-            Player.Skada(dam);
+            Hero.Skada(dam);
         }
         /*static int SumD6(int ant)
         {
@@ -81,14 +81,15 @@ namespace Övningar_2
     }
     class Monster
     {
-        private static int hp;
-        public Monster() 
+        private int hp = 30;
+        public Monster()
         {
             hp = 30;
         }
-        public static void Skada(int skada)
+        public int Skada(int skada)
         {
             bool time1 = false; bool time2 = false;
+            Console.WriteLine($"                Du svingar ditt svärd och gör {skada} skada");
             hp -= skada;
             if (hp <= 0)
             {
@@ -105,37 +106,42 @@ namespace Övningar_2
                 Console.ReadKey();
                 Environment.Exit(0);
             } //Klar, dödsrycket.
-            if (time1==false)
+            if (time1 == false)
             {
                 if (hp <= 10)
                 {
-                    Console.WriteLine($"Du skadar besten för ytterliggare {skada} och du ser hur den rör sig trögare och" +
+                    Console.WriteLine($"                Du skadar besten för ytterliggare {skada} hp och du ser hur den rör sig trögare och" +
                         $" dens svarta blod rinner ymningt från de ställen du tidigare attackerat");
                     time1 = true;
                 }
             } //Engångs flavour när besten går under 10 hp
-            if (time2==false)
+            if (time2 == false)
             {
                 if (hp <= 20)
                 {
-                    Console.WriteLine($"Besten vrålar i smärta när du gör {skada} till den, den rör " +
+                    Console.WriteLine($"                Besten vrålar i smärta när du gör {skada} skada till den, den rör " +
                         $"sig allt mer desperat i korridorens trånga utrymme.");
-                    time2= true;
+                    time2 = true;
                 }
             } //Engångs flavour när besten går under 20 hp
-            Console.WriteLine($"Du svingar ditt svärd och gör {skada}");
+            return skada;
+        }
+        public int HP()
+        {
+            return hp;
         }
     }
     class Player
     {
-        private static int hp;
+        private int hp = 20;
         public Player()
         {
             hp = 20;
         }
-        public static void Skada(int skada)
+        public void Skada(int skada)
         {
             bool time1 = false;
+            Console.WriteLine($"                Besten sveper med sina klor och gör {skada} skada.");
             hp -= skada;
             if (hp <= 0)
             {
@@ -147,12 +153,11 @@ namespace Övningar_2
             {
                 if (hp <= 10)
                 {
-                    Console.WriteLine($"Du tar {skada} i skada, du känner hur kroppen pumpar " +
+                    Console.WriteLine($"                Du tar {skada} i skada, du känner hur kroppen pumpar " +
                         $"ut adrenalin, för att motverka dina allt svårare skador.");
                     time1 = true;
                 }
             }
-            Console.WriteLine($"Besten sveper med sina klor och gör {skada}");
         }
     }
     class Die
