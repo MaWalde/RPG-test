@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Övningar_2
+namespace Kryptan
 {
     internal class Program
     {
