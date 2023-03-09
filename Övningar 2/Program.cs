@@ -10,6 +10,7 @@ namespace Övningar_2
         static Player Hero = new Player();
         static void Main(string[] args)
         {
+            bool agcheck = false;
             /*Console.WriteLine("Hit enter to roll a d6!");
             Console.ReadKey();
             Console.WriteLine($"It lands on {Die6()}");*/
@@ -21,8 +22,21 @@ namespace Övningar_2
                 $"                otrolig skatt, ingen boende i byn vågar sig in i nämnda skog och du har på egen \n" +
                 $"                hand hittat din väg till ingången av en antik krypta.\n" +
                 $"                Det ser otroligt mörkt ut där inne och en känsla av oråd gnager i ditt bakhuvud.\n\n" +
-                $"                Tryck på enter för att gå in i den mörka kryptan");
-            Console.ReadKey();
+                $"                Tryck på '1' för att gå in i den mörka kryptan, tryck '2' för att ändra dig och dra vidare");
+            int val1 = int.Parse(Console.ReadLine());
+            if (val1 == 2)
+            {
+                Console.WriteLine("                Med en sista blick på det djupa mörkret i kryptan vänder du om och när\n" +
+                    "                du kommit ut ur skogen bestämmer du dig för att inte gå tillbaka till byn. Dom skulle\n" +
+                    "                nog aldrig kalla dig feg rakt i ditt ansikte men varför riskera det alls. När solen\n" +
+                    "                börjar gå ner på horisonten och du hittat din lägerplats för natten börjar du överväga\n" +
+                    "                om livet som äventyrare inte är bättre lämpat för mindre fegt folk. Du somnar oroligt\n" +
+                    "                och i nästa by du kommer till tar du anställning som lärling åt byns bagare. Ditt liv\n" +
+                    "                förblir lugnt och fridfullt och kryptans mörker minns du bara i de värsta av feberdrömmar.\n\n" +
+                    "                                                Tack för att du spelat.");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
             Console.Write($"\n                Mörkret sluter sig om dig och du ångrar att du inte packat någon fackla.\n" +
                 $"                Du navigerar dig med en hand på väggen och det djupa mörkret gör att ljudet av dina \n" +
                 $"                fotsteg ekar som trummor i dina ögon, plöstligt försvinner väggen under din hand och du \n" +
@@ -44,58 +58,76 @@ namespace Övningar_2
                 $"                kortsvärd och gör ett utfall.");
             Thread.Sleep(1000);
             Console.ReadKey();
-            Attack();
+            AttAct();
             Console.ReadKey();
-            Defend();
+            DefAct();
             Console.ReadKey();
-            Attack();
+            AttAct();
             Console.ReadKey();
-            Defend();
+            DefAct();
             Console.ReadKey();
-            Attack();
+            AttAct();
             Console.ReadKey();
-            Defend();
+            DefAct();
             Console.ReadKey();
-            Attack();
+            AttAct();
             Console.ReadKey();
-            Defend();
+            DefAct();
             Console.ReadKey();
-            Attack();
+            AttAct();
             Console.ReadKey();
-            Defend();
+            DefAct();
             Console.ReadKey();
-            Attack();
+            AttAct();
             Console.ReadKey();
-            Defend();
+            DefAct();
             Console.ReadKey();
         }
-        static void Attack()
+        static void AttAct()
         {
             int dam = Die.D6() + Die.D6() - 2;
             Leeeek.Skada(dam);
         }
-        static void Defend()
+        static void DefAct()
         {
             int dam = Die.D6() + Die.D6() + Die.D6() - Die.D6() - 2;
             Hero.Skada(dam);
         }
+        /*static void AgiAct()
+        {
+            int vs;
+            if (Player.Agility() > Monster.Agility())
+            {
+                agcheck = true;
+            }
+            else { agcheck = false; }
+        }*/
     }
     class Monster
     {
-        private int hp = 30;
+        private int HP = 30, Str = 7, Agi = 5, Int = 3, Luc = 5;
+        private bool impaired = false;
         private bool time1 = false;
         private bool time2 = false;
         public Monster()
         {
-            hp = 30;
+            HP = 30;
+            Str = 7;
+            Agi = 5;
+            Int = 2;
+            Luc = 3;
+            if (impaired == true)
+            {
+                Str -= 4; Agi -= 4;
+            }
         }
         public int Skada(int skada)
         {
             Console.WriteLine($"                Du svingar ditt svärd och gör {skada} skada");
-            hp -= skada;
+            HP -= skada;
             if (!time2)
             {
-                if (hp <= 20)
+                if (HP <= 20)
                 {
                     Console.WriteLine($"                Besten vrålar i smärta när du gör skada till den, den rör " +
                         $"sig allt mer desperat i korridorens trånga utrymme.");
@@ -104,14 +136,14 @@ namespace Övningar_2
             } //Engångs flavour när besten går under 20 hp
             if (!time1)
             {
-                if (hp <= 10)
+                if (HP <= 10)
                 {
                     Console.WriteLine($"                Du skadar besten för ytterliggare och du ser hur den rör sig trögare och" +
                         $" dens svarta blod rinner ymningt från de ställen du tidigare attackerat");
                     time1 = true;
                 }
             } //Engångs flavour när besten går under 10 hp
-            if (hp <= 0)
+            if (HP <= 0)
             {
                 Console.WriteLine("\n                Besten tar ett sista rosslande andetag när du sänker din klinga i dess hals\n" +
                     "                och sjunker ihop i en stilla hög på korridorens golv. Du plockar upp idolen och bestämmer dig\n" +
@@ -128,14 +160,15 @@ namespace Övningar_2
             } //Klar, dödsrycket.
             return skada;
         }
-        public int HP()
+        /*public static int Agility()
         {
-            return hp;
-        }
+            int res = Agi + Die.D8();
+            return res;
+        }*/
     }
     class Player
     {
-        private int hp = 20;
+        private int hp = 20, Str = 4, Agi = 7, Int = 4, Luc = 5;
         private bool time1 = false;
         public Player()
         {
@@ -161,6 +194,11 @@ namespace Övningar_2
                 Environment.Exit(0);
             } //Klar, dödsrycket
         }
+        /*public static int Agility()
+        {
+            int res = Agi + Die.D10();
+            return res;
+        }*/
     }
     class Die
     {
